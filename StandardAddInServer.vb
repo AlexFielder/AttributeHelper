@@ -1,6 +1,5 @@
 Imports Inventor
 Imports System.Runtime.InteropServices
-Imports Microsoft.Win32
 
 
 Namespace AttributeHelper
@@ -33,20 +32,21 @@ Namespace AttributeHelper
 
         Public Sub Deactivate() Implements Inventor.ApplicationAddInServer.Deactivate
             ' Release objects.
-            Marshal.FinalReleaseComObject(g_inventorApplication)
+            'Marshal.FinalReleaseComObject(g_inventorApplication)
             g_inventorApplication = Nothing
 
             If Not m_attributeButtonDef Is Nothing Then
-                Marshal.FinalReleaseComObject(m_attributeButtonDef)
+                m_attributeButtonDef = Nothing
+                'Marshal.FinalReleaseComObject(m_attributeButtonDef)
             End If
 
             If Not m_UIEvents Is Nothing Then
-                Marshal.FinalReleaseComObject(m_UIEvents)
+                'Marshal.FinalReleaseComObject(m_UIEvents)
                 m_UIEvents = Nothing
             End If
 
-            System.GC.WaitForPendingFinalizers()
-            System.GC.Collect()
+            GC.WaitForPendingFinalizers()
+            GC.Collect()
         End Sub
 
         Public ReadOnly Property Automation() As Object Implements Inventor.ApplicationAddInServer.Automation
